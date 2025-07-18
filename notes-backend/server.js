@@ -8,11 +8,13 @@ app.use(express.json());
 const noteRoutes = require("./routes/noteRoutes");
 const userRoutes = require("./routes/userRoutes");
 
+const verifyToken = require("./middlewares/verifyToken");
+
 app.get("/", (req, res) => {
     res.send("API is running fine...");
 });
 
-app.use("/api/notes", noteRoutes);
+app.use("/api/notes", verifyToken, noteRoutes);
 app.use("/api/users", userRoutes);
 
 mongoose
