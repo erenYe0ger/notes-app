@@ -1,10 +1,30 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import CreateNote from "../component/createNote";
+import NoteItem from "../component/NoteItem";
 
 const Notes = () => {
+    const user = JSON.parse(localStorage.get("user"));
+
     const [notes, setNotes] = useState([]);
     const navigate = useNavigate();
+
+    const fetchNotes = async () => {
+        try {
+            const res = await api.get("/notes");
+            setNotes(res.data);
+        } catch (err) {
+            console.error("Error fetching notes: ", err.message);
+
+            if (err.response?.status === 401) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                navigate("/login");
+                return;
+            }
+        }
+    };
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -13,24 +33,30 @@ const Notes = () => {
             return;
         }
 
-        const fetchNotes = async () => {
-            try {
-                const res = await api.get("/notes");
-                setNotes(res.data);
-            } catch (err) {
-                console.error("Error fetching notes: ", err.message);
-            }
-        };
-
         fetchNotes();
     }, []);
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/login");
+    };
+
     return (
         <div>
+            <button onClick={handleLogout}>Logout</button>
+
+            <h1>Welcome, {user.name} !</h1>
+
             <h2>Your Notes</h2>
+            <CreateNote onNoteCreated={fetchNotes} />
             <ul>
                 {notes.map((note) => (
-                    <li key={note._id}>{note.title}</li>
+                    <NoteItem
+                        key={note._id}
+                        noteData={note}
+                        onNoteChanged={fetchNotes}
+                    />
                 ))}
             </ul>
         </div>

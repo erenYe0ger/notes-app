@@ -10,6 +10,14 @@ const Login = () => {
         password: "",
     });
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            navigate("/");
+            return;
+        }
+    }, []);
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -21,8 +29,8 @@ const Login = () => {
             const res = await loginUser(formData);
             console.log("User Logged in: ", res);
 
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("user", JSON.stringify(res.user));
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
 
             navigate("/");
         } catch (err) {
