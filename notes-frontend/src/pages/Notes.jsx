@@ -5,7 +5,7 @@ import CreateNote from "../component/createNote";
 import NoteItem from "../component/NoteItem";
 
 const Notes = () => {
-    const user = JSON.parse(localStorage.get("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const [notes, setNotes] = useState([]);
     const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
 
@@ -9,6 +9,9 @@ const Login = () => {
         email: "",
         password: "",
     });
+
+    const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -24,6 +27,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         try {
             const res = await loginUser(formData);
@@ -35,28 +39,73 @@ const Login = () => {
             navigate("/");
         } catch (err) {
             console.error("Login error: ", err.message);
+            setErrorMsg("Login failed!");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                name="email"
-                type="email"
-                placeholder="Email"
-                onChange={handleChange}
-                value={formData.email}
-            />
-            <input
-                name="password"
-                type="password"
-                placeholder="Password"
-                onChange={handleChange}
-                value={formData.password}
-            />
+        <div className="p-4 min-h-screen flex justify-center items-center bg-gradient-to-l from-blue-400 to-indigo-900">
+            <form
+                className="w-full max-w-md bg-white p-10 pb-5 rounded-2xl shadow-2xl bg-gradient-to-bl from-green-200 to-blue-200"
+                onSubmit={handleSubmit}
+            >
+                <h1 className="text-2xl text-center font-semibold">
+                    Welcome Back
+                </h1>
+                <input
+                    className="border-b-blue-300 border-b-3 focus:border-blue-500 px-4 py-2 outline-none mt-5 block max-w-xs w-full mx-auto transition-colors duration-500"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    onChange={handleChange}
+                    value={formData.email}
+                />
+                <input
+                    className="border-b-blue-300 border-b-3 focus:border-blue-500 px-4 py-2 outline-none mt-3 block max-w-xs w-full mx-auto transition-colors duration-500"
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                />
 
-            <button type="submit">Login</button>
-        </form>
+                <button
+                    className="bg-blue-500 px-4 py-2 mt-8 max-w-xs w-full  rounded-md text-white block mx-auto cursor-pointer hover:bg-blue-800 outline-none focus:bg-blue-800 transition-colors duration-500"
+                    type="submit"
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <img
+                            src="/loader.gif"
+                            className="h-6 w-6 m-auto"
+                        />
+                    ) : (
+                        "Login"
+                    )}
+                </button>
+
+                {errorMsg && (
+                    <p className="text-red-500 text-xs text-center mt-2">
+                        {errorMsg}
+                    </p>
+                )}
+
+                <p className="text-center mt-5 text-xs">
+                    Don't have an account?{" "}
+                    <span
+                        className="text-purple-900 cursor-pointer hover:text-blue-500 hover:underline"
+                        onClick={() => {
+                            navigate("/register");
+                            return;
+                        }}
+                    >
+                        Register Here
+                    </span>
+                </p>
+            </form>
+        </div>
     );
 };
 
