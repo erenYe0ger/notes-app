@@ -3,12 +3,18 @@
 
 html {
     box-sizing: border-box;
-    font-size: 23px;
+    font-size: 22px;
     font-family: 'Ubuntu', sans-serif;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 650px) {
     html{
         font-size: 18px;
+    }
+}
+
+@media (max-width: 350px) {
+    html{
+        font-size: 15px;
     }
 }

@@ -46,11 +46,11 @@ const NoteItem = ({ noteData, onNoteChanged }) => {
     };
 
     return (
-        <li className="bg-white px-4 py-2 rounded-xl mt-4 w-[25%] h-full shadow-[0_0_20px_12px_rgba(34,197,94,0.7)] hover:shadow-[0_0_20px_15px_rgba(59,130,246,0.6)]">
+        <li className="bg-white px-4 py-2 rounded-xl mt-4 h-full xl:w-[25%] shadow-[0_0_20px_12px_rgba(34,197,94,0.7)] hover:shadow-[0_0_20px_15px_rgba(59,130,246,0.6)]">
             {isEditing ? (
                 <>
                     <input
-                        className="w-full mb-2 px-2 py-1 bg-white outline-none rounded border-2 transition-colors duration-500 border-gray-400 text-sm focus:border-t-red-500 focus:border-b-blue-500"
+                        className="block w-full mb-2 px-2 py-1 bg-white outline-none rounded border-2 transition-colors duration-500 border-gray-400 text-sm focus:border-t-red-500 focus:border-b-blue-500"
                         autoFocus
                         placeholder="Title"
                         name="title"
@@ -59,7 +59,7 @@ const NoteItem = ({ noteData, onNoteChanged }) => {
                     />
 
                     <textarea
-                        className="w-full px-2 py-1 bg-white outline-none rounded resize-none border-2 transition-colors duration-500 border-gray-400 text-sm focus:border-t-red-500 focus:border-b-blue-500"
+                        className="block w-full px-2 py-1 bg-white outline-none rounded resize-none border-2 transition-colors duration-500 border-gray-400 text-sm focus:border-t-red-500 focus:border-b-blue-500"
                         placeholder="Content"
                         name="content"
                         value={editData.content}

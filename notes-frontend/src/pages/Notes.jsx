@@ -28,6 +28,7 @@ const Notes = () => {
     };
 
     useEffect(() => {
+        document.title = "Dashboard | notes-app";
         const token = localStorage.getItem("token");
         if (!token) {
             navigate("/login");
@@ -47,7 +48,7 @@ const Notes = () => {
         <div className="min-h-screen flex flex-col">
             <div className="bg-green-50 p-4 flex flex-col flex-1">
                 {/* Navbar */}
-                <div className="flex justify-between items-center bg-white p-4 rounded-3xl shadow-xl mb-5">
+                <div className="flex max-md:flex-col gap-3 justify-between items-center bg-white p-4 rounded-3xl shadow-xl mb-5">
                     <h1 className="font-bold text-blue-900 ml-5 text-xl">
                         Welcome, {user?.name.toUpperCase()} !
                     </h1>

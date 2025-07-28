@@ -14,6 +14,7 @@ const Login = () => {
     const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(() => {
+        document.title = "Login";
         const token = localStorage.getItem("token");
         if (token) {
             navigate("/");

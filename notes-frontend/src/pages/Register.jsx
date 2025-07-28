@@ -15,6 +15,7 @@ const Register = () => {
     const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(() => {
+        document.title = "Register";
         const token = localStorage.getItem("token");
         if (token) {
             navigate("/");
@@ -85,10 +86,7 @@ const Register = () => {
                     disabled={loading}
                 >
                     {loading ? (
-                        <img
-                            src="/loader.gif"
-                            className="h-6 w-6 m-auto"
-                        />
+                        <img src="/loader.gif" className="h-6 w-6 m-auto" />
                     ) : (
                         "Register"
                     )}
