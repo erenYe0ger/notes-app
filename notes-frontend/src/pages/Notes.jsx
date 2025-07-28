@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import CreateNote from "../component/createNote";
+import CreateNote from "../component/CreateNote";
 import NoteItem from "../component/NoteItem";
 import Footer from "../component/Footer";
 
